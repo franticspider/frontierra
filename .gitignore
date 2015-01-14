@@ -1,28 +1,18 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+#Ignore any backups made by gedit
+*~
 
-# Precompiled Headers
-*.gch
-*.pch
+#These files are created during the usual configure;make build:
+src/*.o
+src/*.d
+src/arg
+src/diffscan
+src/genalign
+src/probe
+src/reseq
+src/soupupdtrc
+src/threadtree
+src/tierra
+src/config.log
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
 
-# Fortran module files
-*.mod
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app

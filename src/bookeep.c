@@ -7,6 +7,9 @@
 #include "license.h"
 #include "tierra.h"
 #include "globals.h"
+ 
+/*SJH addition:*/
+#include "popdy.h"
 
 #ifdef BGL
 #include "tbgl.h"
@@ -426,6 +429,10 @@ void stats()
 #endif /* ERRORTIE */
         }
         CalcGBStats(sl, siz_sl);
+	
+	/*SJH additon: from popdy.h:*/
+	FilePopStats(sl, siz_sl);
+
     }
     else
         CalcSoupStats();

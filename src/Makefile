@@ -86,7 +86,7 @@ endif # NET
 
 
 TIEEXE=tierra
-TIEBASNAM1=$(strip $(TIEEXE) bookeep diskbank rambank \
+TIEBASNAM1=$(strip $(TIEEXE) popdy bookeep diskbank rambank \
     tie_inc decode frontend instruct memalloc memtree slicers trand \
     tsetup ttools micromon operator tieaudsrv)
 ifeq ($(NET),yes)
@@ -369,8 +369,8 @@ clean:
                $(MAKEFILE)_$(THREADTREEEXE).d \
                $(SOUPUPDTRCEXE) $(SOUPUPDTRCOBJS) \
                $(MAKEFILE)_$(SOUPUPDTRCEXE).d \
-               $(PROBEEXE) $(PROBEOBJS) $(MAKEFILE)_$(PROBEEXE).d \
-               genebank.h genebank_xdr.c tiexdrcom.h tiexdrcom_xdr.c)
+               $(PROBEEXE) $(PROBEOBJS) $(MAKEFILE)_$(PROBEEXE).d )               
+# don't delete: genebank.h genebank_xdr.c tiexdrcom.h tiexdrcom_xdr.c)
 ifeq ($(NET),yes)
 	-$(RM) $(strip mesg.h $(NETXDRSRCS) \
                $(LOG2IPMAPEXE) $(LOG2IPMAPOBJS) \

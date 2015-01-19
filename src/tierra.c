@@ -50,6 +50,13 @@ extern __declspec(dllimport) time_t tmlstact;
 
 #ifndef __GUI__
 
+/*SJH Mod for mutaion*/
+#include "popdy.h"
+/*SJH global mutation table*/
+struct s_swt *mut_table;
+
+
+
 /*
  * main - Tierra main program
  *
@@ -61,6 +68,11 @@ int main(argc, argv)
     int argc;
     char *argv[];
 {   int errflag;
+
+
+/*SJH load mutation table */
+mut_table = load_mut("tiemut_table.mtx");
+
 
 #ifdef __MWERKS__
 #if FRONTEND == STDIO  /* get command line and parse it if on Mac */

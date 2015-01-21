@@ -1517,15 +1517,41 @@ void pop()
     adr1=ce->c.c->st[ce->c.c->sp]+flaw();
 
     if((is.dreg)==(&(ce->c.c->ip)))
-    {   *(is.dreg)=ad(adr1);
-        ce->c.c->retins=1;
+    //{   *(is.dreg)=ad(adr1);
+    //    ce->c.c->retins=1;
+
+
+	/************/
+
+	/* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
+	 * Here we ensure that any return to zero acts like a nop.
+	 * 
+	 * */
+
+    {	
+        if(ad(adr1) != 0)
+        {   *(is.dreg)=ad(adr1);
+            ce->c.c->retins=1;
+            if (!ce->c.c->sp)
+            ce->c.c->sp = STACK_SIZE - 1; 
+            else
+            --ce->c.c->sp;
+        }
+        else
+            is.iip = 1;
+
+	/************/
+
     }
-    else
+    else{/*Declan - braces added to include following if/else within this else*/
         *(is.dreg)=adr1;
-    if (!ce->c.c->sp)
-        ce->c.c->sp = STACK_SIZE - 1;  /* decr stack pointer */
-    else
-        --ce->c.c->sp;
+        if (!ce->c.c->sp)
+            ce->c.c->sp = STACK_SIZE - 1;  /* decr stack pointer */
+        else
+            --ce->c.c->sp;
+    }/*Declan - braces added to include following if/else within this else*/
+
+	/************/
     DoMods();
     DoFlags();
 #if PLOIDY > 1
@@ -2248,7 +2274,8 @@ void divide()                   /* cell division */
             ce->d.ne = ce->q.htis;  /* clean up if div 0 or 1 before 2 */
             nc->d.dm = 0;
 
-            DownReperIf(ce);
+            /*SJH mod: don't select for dividers: 
+            DownReperIf(ce); */
             DivideBookeep(ce, nc, index);
 
 #ifdef EXEINSTSIZTIMSLC

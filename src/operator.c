@@ -8,6 +8,10 @@
 #include "license.h"
 #include "tierra.h"
 #include "globals.h"
+/* SJH mod: changing this to use differnt networks. 
+*/
+#include "popdy.h"
+
 
 Pcells NextSliceQueue P_((Pcells  oc));
 Pcells MoveSliceQueue P_((Pcells  oc, I32s  n));
@@ -215,21 +219,37 @@ void mutate()
 void mut_site(s, track)
 HpInst s;
 I32s track;
-{   if (tdrand() < MutBitProp) /* flip bit in instruction */
-    {
-#if PLOIDY == 1
-    s[0] ^= (1 << (tirand() % (I32s) InstBitNum));
-#else /* PLOIDY > 1 */
-    s[0][track] ^= (1 << (tirand() % (I32s) InstBitNum));
-#endif /* PLOIDY > 1 */
+{    
+    /* sjh mod: bit flip mutations are all very well, but they bias the arrangement
+     * of mutations. Better for neutral mutations to remove this */
+    /*Set this flag to zero to run tierra 6.02 unchanged */
+    int sjh=1;
+    if(sjh){ 
+        /* we NEVER replace instruction with randomly selected instruction */
+        //printf("Mutated from %c: %d, MutBitProp = %f, ",65+s[0], s[0], MutBitProp);
+	//s[0] ^= (1 << (tirand() % (I32s) InstBitNum));
+		
+	s[0] = sw_mut(s[0]);
+	//printf("to %c: %d\n",65+s[0], s[0]);
     }
-    else /* replace instruction with randomly selected instruction */
-    {
+
+    else{
+	if (tdrand() < MutBitProp) /* flip bit in instruction */
+			{
 #if PLOIDY == 1
-    s[0]=(Instruction)(tirand()%(I32s)InstNum);
+            s[0] ^= (1 << (tirand() % (I32s) InstBitNum));
 #else /* PLOIDY > 1 */
-    s[0][track]=(Instruction)(tirand()%(I32s)InstNum);
+            s[0][track] ^= (1 << (tirand() % (I32s) InstBitNum));
 #endif /* PLOIDY > 1 */
+        }
+        else /* replace instruction with randomly selected instruction */
+        {
+#if PLOIDY == 1
+            s[0]=(Instruction)(tirand()%(I32s)InstNum);
+#else /* PLOIDY > 1 */
+            s[0][track]=(Instruction)(tirand()%(I32s)InstNum);
+#endif /* PLOIDY > 1 */
+        }
     }
 }
 

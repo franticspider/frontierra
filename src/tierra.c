@@ -688,8 +688,9 @@ void SystemWork()
     is.iip = 1;
     if (ce->c.c->fl.E)
     {   ce->d.flags++;
+/* SJH mod: remove queue selection by commenting out the next two lines  
         if (!(ce->d.dm))
-            UpRprIf(ce);
+            UpRprIf(ce);*/
     }
     if (RateMut && ++CountMutRate >= RateMut)
     {   mutate();

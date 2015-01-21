@@ -479,6 +479,13 @@ void plan()
     TierraClock = (I32s) tietime(NULL);
     if (OClock)
     {   FESpeed = TierraClock - OClock;
+	/* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
+	 * Every 1,000,000 instructions Tierra will calculate and display
+	 * the speed at which instructions are executed. 
+	 * If over 1,000,000 instructions are executed per second 
+	 * then the time difference between each period of 1,000,000
+	 * instructions is zero seconds. This results 
+	 * in a division by zero and a 'floating point error'. */
         if (FESpeed < 1) FESpeed = 1;
         Speed = 1000000L / FESpeed;
         LastSpeedUpdate=TierraClock;
@@ -1247,7 +1254,16 @@ void CalcFlawRates()
     double prob_of_hit;
 
     if (GenPerMovMut)
-        RateMovMut = (I32s) 2L * GenPerMovMut * AverageSize * PLOIDY;
+	/* 
+	 * sjh mod 1: assuming length of seed gene is 80, we want a 
+	 * constant mutation rate 
+	 * original:  	RateMovMut = (I32s) 2L * GenPerMovMut * 80 * PLOIDY;
+	 * 
+	 * sjh mod 2: ..if we get rid of the 2L * 80, we can set GenPerMovMut 
+	 * to give >1 mutation per individual - up to total mutation 
+	 * 			(i.e. 100% error on copy) 
+	 */	
+	RateMovMut = (I32s) GenPerMovMut * PLOIDY;
     if (InstExe.m)
         pop_gen_time=(I32s)(AvgPop*RepInst);
     else

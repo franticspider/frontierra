@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /*#define TIERRA*/
-#define PLOIDY 1
+//#define PLOIDY 1
 
 #include "license.h"
 #include "tierra.h"

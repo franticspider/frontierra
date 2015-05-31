@@ -1516,42 +1516,50 @@ void pop()
     DoRPNu();
     adr1=ce->c.c->st[ce->c.c->sp]+flaw();
 
-    if((is.dreg)==(&(ce->c.c->ip)))
-    //{   *(is.dreg)=ad(adr1);
-    //    ce->c.c->retins=1;
-
-
-	/************/
-
-	/* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
-	 * Here we ensure that any return to zero acts like a nop.
-	 * 
-	 * */
-
-    {	
-        if(ad(adr1) != 0)
+    /*sjh mod: switch between tierra 6.02 and Declan's zero-debiased version */
+    /*Tierra 6.02 version:*/
+    if(!FT_cfg_DeBiasZero){    
+        if((is.dreg)==(&(ce->c.c->ip)))
         {   *(is.dreg)=ad(adr1);
             ce->c.c->retins=1;
-            if (!ce->c.c->sp)
-            ce->c.c->sp = STACK_SIZE - 1; 
-            else
-            --ce->c.c->sp;
         }
         else
-            is.iip = 1;
-
-	/************/
-
-    }
-    else{/*Declan - braces added to include following if/else within this else*/
-        *(is.dreg)=adr1;
+            *(is.dreg)=adr1;
         if (!ce->c.c->sp)
             ce->c.c->sp = STACK_SIZE - 1;  /* decr stack pointer */
         else
             --ce->c.c->sp;
-    }/*Declan - braces added to include following if/else within this else*/
+    }
+    /*FRONTIERRA ZERO DEBIASING CODE */
+    else{
 
-	/************/
+        if((is.dreg)==(&(ce->c.c->ip)))
+	    /* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
+	     * Here we ensure that any return to zero acts like a nop.
+	     * 
+	     * */
+        {	
+            if(ad(adr1) != 0)
+            {   *(is.dreg)=ad(adr1);
+                ce->c.c->retins=1;
+                if (!ce->c.c->sp)
+                ce->c.c->sp = STACK_SIZE - 1; 
+                else
+                --ce->c.c->sp;
+            }
+            else
+                is.iip = 1;
+        }
+        else{/*Declan - braces added to include following if/else within this else*/
+            *(is.dreg)=adr1;
+            if (!ce->c.c->sp)
+                ce->c.c->sp = STACK_SIZE - 1;  /* decr stack pointer */
+            else
+                --ce->c.c->sp;
+        }/*Declan - braces added to include following if/else within this else*/
+	    /************/
+    }
+
     DoMods();
     DoFlags();
 #if PLOIDY > 1
@@ -2274,8 +2282,8 @@ void divide()                   /* cell division */
             ce->d.ne = ce->q.htis;  /* clean up if div 0 or 1 before 2 */
             nc->d.dm = 0;
 
-            /*SJH mod: don't select for dividers: 
-            DownReperIf(ce); */
+            /*SJH mod: DownReaper is now turned on and off within the function itself (queues.c) */  
+            DownReperIf(ce); 
             DivideBookeep(ce, nc, index);
 
 #ifdef EXEINSTSIZTIMSLC

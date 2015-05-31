@@ -8,7 +8,7 @@
 #include "license.h"
 #include "tierra.h"
 #include "globals.h"
-/* SJH mod: changing this to use differnt networks. 
+/* SJH mod: changing this to use differnt mutation networks. 
 */
 #include "popdy.h"
 
@@ -220,22 +220,11 @@ void mut_site(s, track)
 HpInst s;
 I32s track;
 {    
-    /* sjh mod: bit flip mutations are all very well, but they bias the arrangement
-     * of mutations. Better for neutral mutations to remove this */
-    /*Set this flag to zero to run tierra 6.02 unchanged */
-    int sjh=1;
-    if(sjh){ 
-        /* we NEVER replace instruction with randomly selected instruction */
-        //printf("Mutated from %c: %d, MutBitProp = %f, ",65+s[0], s[0], MutBitProp);
-	//s[0] ^= (1 << (tirand() % (I32s) InstBitNum));
-		
-	s[0] = sw_mut(s[0]);
-	//printf("to %c: %d\n",65+s[0], s[0]);
-    }
 
-    else{
-	if (tdrand() < MutBitProp) /* flip bit in instruction */
-			{
+    /*Tierra 6.02 version:*/
+    if(!FT_cfg_DeBiasZero){ 
+        if (tdrand() < MutBitProp) /* flip bit in instruction */
+		{
 #if PLOIDY == 1
             s[0] ^= (1 << (tirand() % (I32s) InstBitNum));
 #else /* PLOIDY > 1 */
@@ -251,6 +240,18 @@ I32s track;
 #endif /* PLOIDY > 1 */
         }
     }
+    /*FRONTIERRA MUTATION DEBIASING CODE */
+    else{
+        /* sjh mod: bit flip mutations are all very well, but they bias the arrangement
+         * of mutations. Better for neutral mutations to remove this */
+#if PLOIDY == 1
+	    s[0] = sw_mut(s[0]);
+	    //printf("to %c: %d\n",65+s[0], s[0]);
+#else /* PLOIDY > 1 */
+	    s[0][track] = sw_mut(s[0]);
+#endif    
+    }
+
 }
 
 /*

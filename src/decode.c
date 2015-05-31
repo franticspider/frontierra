@@ -1143,18 +1143,19 @@ void decjmp() /* template jump: jmpo(), jmpb(), jmpf() */
         tval = flaw() + ce->c.d->re[0];
     tval = ce->c.c->re[mo(tval, NUMREG)] + flaw();
 
-	/*
-	 * Originally: 
-	 *
-    is.sval = ad(tval);  // target for IP if s == 0 
-	 */
+    /*Tierra 6.02 version:*/
+    if(!FT_cfg_DeBiasZero){
+        is.sval = ad(tval);  // target for IP if s == 0 
+    }
+    /*FRONTIERRA ZERO DEBIASING CODE */
+    else{
+	    /* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
+	     * If a jump template is missing, instruction pointer will simply continue
+	     * to next instruction in the soup, and will not jump to the location pointed
+	     * at by the bx register. */
+        is.sval = ad(ce->c.c->ip + 1);  /* target for IP if s == 0 */
 
-    is.sval = ad(ce->c.c->ip + 1);  /* target for IP if s == 0 */
-
-	/* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
-	 * If a jump template is missing, instruction pointer will simply continue
-	 * to next instruction in the soup, and will not jump to the location pointed
-	 * at by the bx register. */
+    }
 
     is.dreg = &(ce->c.c->ip);  /* destination register for address */
     is.dreg2 = &BitBucket;  /* destination register for template size */

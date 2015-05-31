@@ -132,8 +132,10 @@ void DownReaper(cp)
     Pcells cp;
 {   Pcells pe, ne, ne2;
 
-    if (cp == BottomReap)
+    if (cp == BottomReap){
+        printf("Can't downReaper - we're at the bottom!\n");
         return;
+    }
 #ifdef ERRORTIE
     if (cp->q.n_reap.a == cp->q.htis.a && cp->q.n_reap.i == cp->q.htis.i
         && cp->q.htis.a == cp->q.p_reap.a && cp->q.htis.i == cp->q.p_reap.i
@@ -167,12 +169,15 @@ void DownReaper(cp)
  */
 void UpRprIf(cp)
     Pcells cp;
-{   if (cp->d.flags >= cells[cp->q.p_reap.a][cp->q.p_reap.i].d.flags)
-        UpReaper(cp);
+{   
+    if(!FT_cfg_DeBiasReap){
+        if (cp->d.flags >= cells[cp->q.p_reap.a][cp->q.p_reap.i].d.flags)
+            UpReaper(cp);
+    }
 }
 
 /*
- * UpRprIf - if given cell has an error count less than or equal to that
+ * DownReperIf - if given cell has an error count less than or equal to that
  *           of the lower cell in the reaper queue, move the given cell
  *           below the lower cell
  *
@@ -180,8 +185,12 @@ void UpRprIf(cp)
  */
 void DownReperIf(cp)
     Pcells cp;
-{   if (cp->d.flags <= cells[cp->q.n_reap.a][cp->q.n_reap.i].d.flags)
-        DownReaper(cp);
+{   
+    if(!FT_cfg_DeBiasReap){
+        if (cp->d.flags <= cells[cp->q.n_reap.a][cp->q.n_reap.i].d.flags){
+            DownReaper(cp);
+        }
+    }
 }
 
 /*

@@ -1,0 +1,12 @@
+-------------------------------------
+InstExe.m = 0
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 1
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200

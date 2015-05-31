@@ -23,6 +23,15 @@
 #ifndef BGL_CLNT
 
 #ifdef TIERRA
+
+/*FRONTIERRA DEBIASING PARAMETERS *******************************************/
+extern I32s FT_cfg_DeBiasZero; /* 0 = Tierra 6.02, 1 = No zero address bias */
+extern I32s FT_cfg_DeBiasReap; /* 0 = Tierra 6.02, 1 = No reaper bias       */
+extern I32s FT_cfg_DeBiasLen;  /* 0 = Tierra 6.02, 1 = No length bias       */
+extern I32s FT_cfg_DeBiasMut; /* 0 = Tierra 6.02, 1 = No mutation bias     */
+/****************************************************************************/
+
+
 extern I32s alive;          /* run simulator alive * 1,000,000 instructions */
 extern I32s AliveGen;       /* 0=alive in InstExe.m, 1=alive in generations */
 EXTERN double Generations; /* elapsed generations (AvgPop/TimeBirth-Death) */

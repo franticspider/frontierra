@@ -1246,38 +1246,107 @@ void AdjCtrlVars()              /* adjust control variables */
 }
 
 /*
- * AdjCtrlVars - for next million instruction interval, update 
+ * CalcflawRates - for next million instruction interval, update 
  *                  flaw and mutation rates
  */
 void CalcFlawRates()
 {   I32s pop_gen_time;
     double prob_of_hit;
+    FILE *fp;
+    char * FTfn = "FTLenBias.txt";
+    I32s FTfnok = 0;
 
-    if (GenPerMovMut)
-	/* 
-	 * sjh mod 1: assuming length of seed gene is 80, we want a 
-	 * constant mutation rate 
-	 * original:  	RateMovMut = (I32s) 2L * GenPerMovMut * 80 * PLOIDY;
-	 * 
-	 * sjh mod 2: ..if we get rid of the 2L * 80, we can set GenPerMovMut 
-	 * to give >1 mutation per individual - up to total mutation 
-	 * 			(i.e. 100% error on copy) 
-	 */	
-	RateMovMut = (I32s) GenPerMovMut * PLOIDY;
-    if (InstExe.m)
-        pop_gen_time=(I32s)(AvgPop*RepInst);
-    else
-    {   RepInst = 10L * AverageSize;
-        pop_gen_time = (AverageSize) ?
-            (RepInst * (SoupSize / (4L * AverageSize))) : 0;
+    //sjh TODO: put the right code in the right place for this
+    /*Tierra 6.02 version:*/
+    if (!FT_cfg_DeBiasLen){
+        if (GenPerMovMut)
+            RateMovMut = (I32s) 2L * GenPerMovMut * AverageSize * PLOIDY;
+        if (InstExe.m)
+            pop_gen_time=(I32s)(AvgPop*RepInst);
+        else
+        {   RepInst = 10L * AverageSize;
+            pop_gen_time = (AverageSize) ?
+                (RepInst * (SoupSize / (4L * AverageSize))) : 0;
+        }
+        prob_of_hit = (double) AverageSize / (double) SoupSize;
+        if (GenPerBkgMut)
+            RateMut=(I32s)(((double)pop_gen_time)*2.0*
+                ((double)GenPerBkgMut)*prob_of_hit);
+            
+	        /* To clarify what this rate actually depends on, let's analyse the equations: 
+		        If (InstExe.m)
+
+			        RateMut = pop_gen_time         * 2 * GenPerBkgMut * prob_of_hit
+
+				            = AvgPop * RepInst     * 2 * GenPerBkgMut * prob_of_hit
+				            _______________________________________________________
+
+				             AvgPop       - average population over the time interval
+				             RepInst      - avg num of inst executed per replication
+                            (These are both calculted elsewhere - TODO: deduce the derivation
+		        ELSE
+
+			        RateMut = pop_gen_time                  * 2 * GenPerBkgMut * prob_of_hit
+
+				              10 * AverageSize * SoupSize                         AverageSize
+				            = ---------------------------   * 2 * GenPerBkgMut * -------------
+				               4 * AverageSize                                     SoupSize
+
+				            = 5 * AverageSize * GenPerBkgMut
+
+				            = 5 * 80 * 32   
+                So frontierra will use 400 * GenPerBkgMut as the value                             
+	        */
+        if (GenPerFlaw)
+            RateFlaw = (I32s) RepInst * GenPerFlaw * 2L;
+            /*       = 10 * AverageSize * GenPerFlaw * 2L
+                     = 1600 * GenPerFlaw
+            */
     }
-    prob_of_hit = (double) AverageSize / (double) SoupSize;
-    if (GenPerBkgMut)
-        RateMut=(I32s)(((double)pop_gen_time)*2.0*
-            ((double)GenPerBkgMut)*prob_of_hit);
-    if (GenPerFlaw)
-        RateFlaw = (I32s) RepInst * GenPerFlaw * 2L;
+    /*FRONTIERRA LENGTH DEBIASING CODE */
+    else{
+
+        if (GenPerMovMut)
+	        /* 
+	         * assuming length of seed gene is 80, we want a 
+	         * constant mutation rate 
+	         * original:  	RateMovMut = (I32s) 2L * GenPerMovMut * 80 * PLOIDY;
+             *                          PLOIDY is defined as 1 in Makefile
+	         * 
+	         * TODO: ..if we get rid of the 2L * 80, we can set GenPerMovMut 
+	         * to give >1 mutation per individual - up to total mutation 
+	         * 			(i.e. 100% error on copy) 
+	         */	
+	        RateMovMut = (I32s) 160L * GenPerMovMut;
+
+        if (GenPerBkgMut)
+            RateMut    = (I32s) 400L * GenPerBkgMut;
+        if (GenPerFlaw)
+            RateFlaw   = (I32s) 1600L * GenPerFlaw;
+
+    }
+
+    if (!InstExe.m){
+        if((fp = fopen(FTfn,"w"))!=NULL)
+            FTfnok =1;
+    }
+    else{
+        if((fp = fopen(FTfn,"a"))!=NULL)
+            FTfnok =1;
+    }
+    if(FTfnok){
+        fprintf(fp,"-------------------------------------\nInstExe.m = %d\n",InstExe.m);
+        fprintf(fp,"FT_cfg_DeBiasLen = %d\n",FT_cfg_DeBiasLen);
+        fprintf(fp,"GenPerMovMut = %d\tRateMovMut = %d\n",GenPerMovMut,RateMovMut);
+        fprintf(fp,"GenPerBkgMut = %d\tRateMut    = %d\n",GenPerBkgMut,RateMut);
+        fprintf(fp,"GenPerFlaw   = %d\tRateFlaw   = %d\n",GenPerFlaw,RateFlaw);
+        fclose(fp);
+    }
+
 }
+
+
+
 #ifdef EXEINSTSIZTIMSLC
 void AllocCellGenBits(nc)
 Pcells nc;

@@ -32,6 +32,7 @@ I8s corefile[120];
  * alterflag = 0 - examine parameter
  *             1 - alter parameter where permitted while running
  *             2 - run restart
+ * MonReq = 0 - all calls to GetAVar set MonReq = 0!  
  *
  * Returns:
  */
@@ -742,6 +743,62 @@ I32s alterflag, MonReq, buflen;
                     (const char *)"FindTimeI = %d", &FindTimeI);
             vqu.type = 'i';
             vqu.i = FindTimeI;
+            rtncode=1;
+            break;
+        }
+        if (!strncmp((const char *)data, (const char *)"FT_cfg_DeBiasZero", 17))
+        {   if (MonReq)
+            {   strcpy(((char *)&(vqu.name[0])),
+                    (const char *)"FT_cfg_DeBiasZero");
+                tsprintf((char *)(&((vqu.value)[0])), "%d", FT_cfg_DeBiasZero);
+            }
+            else if (alterflag)
+                sscanf((const char *)data,
+                    (const char *)"FT_cfg_DeBiasZero = %d", &FT_cfg_DeBiasZero);
+            vqu.type = 'i';
+            vqu.i = FT_cfg_DeBiasZero;
+            rtncode=1;
+            break;
+        }
+        if (!strncmp((const char *)data, (const char *)"FT_cfg_DeBiasReap", 17))
+        {   if (MonReq)
+            {   strcpy(((char *)&(vqu.name[0])),
+                    (const char *)"FT_cfg_DeBiasReap");
+                tsprintf((char *)(&((vqu.value)[0])), "%d", FT_cfg_DeBiasReap);
+            }
+            else if (alterflag)
+                sscanf((const char *)data,
+                    (const char *)"FT_cfg_DeBiasReap = %d", &FT_cfg_DeBiasReap);
+            vqu.type = 'i';
+            vqu.i = FT_cfg_DeBiasReap;
+            rtncode=1;
+            break;
+        }
+        if (!strncmp((const char *)data, (const char *)"FT_cfg_DeBiasLen", 16))
+        {   if (MonReq)
+            {   strcpy(((char *)&(vqu.name[0])),
+                    (const char *)"FT_cfg_DeBiasLen");
+                tsprintf((char *)(&((vqu.value)[0])), "%d", FT_cfg_DeBiasLen);
+            }
+            else if (alterflag)
+                sscanf((const char *)data,
+                    (const char *)"FT_cfg_DeBiasLen = %d", &FT_cfg_DeBiasLen);
+            vqu.type = 'i';
+            vqu.i = FT_cfg_DeBiasLen;
+            rtncode=1;
+            break;
+        }
+        if (!strncmp((const char *)data, (const char *)"FT_cfg_DeBiasMut", 16))
+        {   if (MonReq)
+            {   strcpy(((char *)&(vqu.name[0])),
+                    (const char *)"FT_cfg_DeBiasMut");
+                tsprintf((char *)(&((vqu.value)[0])), "%d", FT_cfg_DeBiasMut);
+            }
+            else if (alterflag)
+                sscanf((const char *)data,
+                    (const char *)"FT_cfg_DeBiasMut = %d", &FT_cfg_DeBiasMut);
+            vqu.type = 'i';
+            vqu.i = FT_cfg_DeBiasMut;
             rtncode=1;
             break;
         }

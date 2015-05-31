@@ -13,6 +13,13 @@
 #include "license.h"
 
 #ifdef TIERRA
+/*FRONTIERRA DEBIASING PARAMETERS ****************************************/
+I32s FT_cfg_DeBiasZero = 1; /* 0 = Tierra 6.02, 1 = No zero address bias */
+I32s FT_cfg_DeBiasReap = 1; /* 0 = Tierra 6.02, 1 = No reaper bias       */
+I32s FT_cfg_DeBiasLen  = 1; /* 0 = Tierra 6.02, 1 = No length bias       */
+I32s FT_cfg_DeBiasMut  = 1; /* 0 = Tierra 6.02, 1 = No mutation bias     */
+/*************************************************************************/
+
 I32s BrkupSiz = 1024; /* size of output file in K: break.1, break.2 ... */
 I32s CumGeneBnk = 0;  /* Use cumulative gene files, or overwrite */
 I32s debug = 0;       /* 0 = off, 1 = on, printf statements for debugging */

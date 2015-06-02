@@ -24,5 +24,23 @@ cd gb_test1
 cd ../
 ../../src/tierra testlenbias_in
 
-#TODO: need to create some diagnostics here...
+#NOW TEST WITHOUT DEBIASING:
+cd ..
 
+#create the execution directory
+rm -r testlenbiasz
+mkdir testlenbiasz
+cd testlenbiasz
+
+#copy the data we need to gb0
+cp ../../config/tiemut_table.mtx . 
+cp ../../config/testlenbiasz_in .
+cp -r ../../config/gb0 gb_test1
+
+#generate the input data:
+cd gb_test1
+../../../src/arg c 0080.gen 0080aaa.tie
+
+#now run tierra (test1_in just runs 10 million instructions - takes about 15 seconds)
+cd ../
+../../src/tierra testlenbiasz_in

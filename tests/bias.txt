@@ -1,0 +1,178 @@
+::::::::::::::
+testlenbias/FTLenBias.txt
+::::::::::::::
+-------------------------------------
+InstExe.m = 0
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 1
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 2
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 3
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 4
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 5
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 6
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 7
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 8
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 9
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 10
+FT_cfg_DeBiasLen = 1
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12800
+GenPerFlaw   = 32	RateFlaw   = 51200
+::::::::::::::
+testlenbias/FTMutBias.txt
+::::::::::::::
+FT_cfg_DeBiasMut = 1
+Running Frontierra version of mut_site()
+::::::::::::::
+testlenbias/FTReapBiasJmp.txt
+::::::::::::::
+FT_cfg_DeBiasReap = 1
+Running Tierra 6.02 version of UpRprIf()
+::::::::::::::
+testlenbias/FTZeroBiasJmp.txt
+::::::::::::::
+FT_cfg_DeBiasZeroJmp = 1
+Running Frontierra version of decjmp()
+::::::::::::::
+testlenbias/FTZeroBias.txt
+::::::::::::::
+FT_cfg_DeBiasZero = 1
+Running Frontierra version of pop()
+::::::::::::::
+testlenbiasz/FTLenBias.txt
+::::::::::::::
+-------------------------------------
+InstExe.m = 0
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 12765
+GenPerFlaw   = 32	RateFlaw   = 51200
+-------------------------------------
+InstExe.m = 1
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1328
+GenPerBkgMut = 32	RateMut    = 19239
+GenPerFlaw   = 32	RateFlaw   = 54272
+-------------------------------------
+InstExe.m = 2
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1296
+GenPerBkgMut = 32	RateMut    = 24470
+GenPerFlaw   = 32	RateFlaw   = 53056
+-------------------------------------
+InstExe.m = 3
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1296
+GenPerBkgMut = 32	RateMut    = 24787
+GenPerFlaw   = 32	RateFlaw   = 52864
+-------------------------------------
+InstExe.m = 4
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1344
+GenPerBkgMut = 32	RateMut    = 25346
+GenPerFlaw   = 32	RateFlaw   = 52928
+-------------------------------------
+InstExe.m = 5
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 23745
+GenPerFlaw   = 32	RateFlaw   = 52160
+-------------------------------------
+InstExe.m = 6
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1248
+GenPerBkgMut = 32	RateMut    = 23687
+GenPerFlaw   = 32	RateFlaw   = 51520
+-------------------------------------
+InstExe.m = 7
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1264
+GenPerBkgMut = 32	RateMut    = 23874
+GenPerFlaw   = 32	RateFlaw   = 52096
+-------------------------------------
+InstExe.m = 8
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1296
+GenPerBkgMut = 32	RateMut    = 24970
+GenPerFlaw   = 32	RateFlaw   = 52992
+-------------------------------------
+InstExe.m = 9
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1280
+GenPerBkgMut = 32	RateMut    = 23838
+GenPerFlaw   = 32	RateFlaw   = 51776
+-------------------------------------
+InstExe.m = 10
+FT_cfg_DeBiasLen = 0
+GenPerMovMut = 8	RateMovMut = 1328
+GenPerBkgMut = 32	RateMut    = 25595
+GenPerFlaw   = 32	RateFlaw   = 54336
+::::::::::::::
+testlenbiasz/FTMutBias.txt
+::::::::::::::
+FT_cfg_DeBiasMut = 0
+Running Tierra 6.02 version of mut_site()
+::::::::::::::
+testlenbiasz/FTReapBiasJmp.txt
+::::::::::::::
+FT_cfg_DeBiasReap = 0
+Running Frontierra version of UpRprIf()
+::::::::::::::
+testlenbiasz/FTZeroBiasJmp.txt
+::::::::::::::
+FT_cfg_DeBiasZeroJmp = 0
+Running Tierra 6.02 version of decjmp()
+::::::::::::::
+testlenbiasz/FTZeroBias.txt
+::::::::::::::
+FT_cfg_DeBiasZero = 0
+Running Tierra 6.02 version of pop()

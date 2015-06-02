@@ -8,7 +8,7 @@
 #include "tierra.h"
 #include "globals.h"
  
-/*SJH addition:*/
+/*FRONTIERRA addition:*/
 #include "frontierra.h"
 
 #ifdef BGL
@@ -429,9 +429,9 @@ void stats()
 #endif /* ERRORTIE */
         }
         CalcGBStats(sl, siz_sl);
-	
-	/*SJH additon: from frontierra.h:*/
-	FilePopStats(sl, siz_sl);
+    
+    /*FRONTIERRA additon: from frontierra.h:*/
+    FilePopStats(sl, siz_sl);
 
     }
     else
@@ -479,13 +479,13 @@ void plan()
     TierraClock = (I32s) tietime(NULL);
     if (OClock)
     {   FESpeed = TierraClock - OClock;
-	/* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
-	 * Every 1,000,000 instructions Tierra will calculate and display
-	 * the speed at which instructions are executed. 
-	 * If over 1,000,000 instructions are executed per second 
-	 * then the time difference between each period of 1,000,000
-	 * instructions is zero seconds. This results 
-	 * in a division by zero and a 'floating point error'. */
+    /* Edited by Declan Baugh, Dublin City University, 2nd Nov 2012, declanbaugh@gmail.com
+     * Every 1,000,000 instructions Tierra will calculate and display
+     * the speed at which instructions are executed. 
+     * If over 1,000,000 instructions are executed per second 
+     * then the time difference between each period of 1,000,000
+     * instructions is zero seconds. This results 
+     * in a division by zero and a 'floating point error'. */
         if (FESpeed < 1) FESpeed = 1;
         Speed = 1000000L / FESpeed;
         LastSpeedUpdate=TierraClock;
@@ -1256,7 +1256,6 @@ void CalcFlawRates()
     char * FTfn = "FTLenBias.txt";
     I32s FTfnok = 0;
 
-    //sjh TODO: put the right code in the right place for this
     /*Tierra 6.02 version:*/
     if (!FT_cfg_DeBiasLen){
         if (GenPerMovMut)
@@ -1273,30 +1272,30 @@ void CalcFlawRates()
             RateMut=(I32s)(((double)pop_gen_time)*2.0*
                 ((double)GenPerBkgMut)*prob_of_hit);
             
-	        /* To clarify what this rate actually depends on, let's analyse the equations: 
-		        If (InstExe.m)
+            /* To clarify what this rate actually depends on, let's analyse the equations: 
+                If (InstExe.m)
 
-			        RateMut = pop_gen_time         * 2 * GenPerBkgMut * prob_of_hit
+                    RateMut = pop_gen_time         * 2 * GenPerBkgMut * prob_of_hit
 
-				            = AvgPop * RepInst     * 2 * GenPerBkgMut * prob_of_hit
-				            _______________________________________________________
+                            = AvgPop * RepInst     * 2 * GenPerBkgMut * prob_of_hit
+                            _______________________________________________________
 
-				             AvgPop       - average population over the time interval
-				             RepInst      - avg num of inst executed per replication
+                             AvgPop       - average population over the time interval
+                             RepInst      - avg num of inst executed per replication
                             (These are both calculted elsewhere - TODO: deduce the derivation
-		        ELSE
+                ELSE
 
-			        RateMut = pop_gen_time                  * 2 * GenPerBkgMut * prob_of_hit
+                    RateMut = pop_gen_time                  * 2 * GenPerBkgMut * prob_of_hit
 
-				              10 * AverageSize * SoupSize                         AverageSize
-				            = ---------------------------   * 2 * GenPerBkgMut * -------------
-				               4 * AverageSize                                     SoupSize
+                              10 * AverageSize * SoupSize                         AverageSize
+                            = ---------------------------   * 2 * GenPerBkgMut * -------------
+                               4 * AverageSize                                     SoupSize
 
-				            = 5 * AverageSize * GenPerBkgMut
+                            = 5 * AverageSize * GenPerBkgMut
 
-				            = 5 * 80 * 32   
+                            = 5 * 80 * 32   
                 So frontierra will use 400 * GenPerBkgMut as the value                             
-	        */
+            */
         if (GenPerFlaw)
             RateFlaw = (I32s) RepInst * GenPerFlaw * 2L;
             /*       = 10 * AverageSize * GenPerFlaw * 2L
@@ -1307,17 +1306,17 @@ void CalcFlawRates()
     else{
 
         if (GenPerMovMut)
-	        /* 
-	         * assuming length of seed gene is 80, we want a 
-	         * constant mutation rate 
-	         * original:  	RateMovMut = (I32s) 2L * GenPerMovMut * 80 * PLOIDY;
-             *                          PLOIDY is defined as 1 in Makefile
-	         * 
-	         * TODO: ..if we get rid of the 2L * 80, we can set GenPerMovMut 
-	         * to give >1 mutation per individual - up to total mutation 
-	         * 			(i.e. 100% error on copy) 
-	         */	
-	        RateMovMut = (I32s) 160L * GenPerMovMut;
+            /* 
+             * assuming length of seed gene is 80, we want a 
+             * constant mutation rate 
+             * original: RateMovMut = (I32s) 2L * GenPerMovMut * 80 * PLOIDY;
+             *           PLOIDY is defined as 1 in Makefile
+             * 
+             * TODO: ..if we get rid of the 2L * 80, we can set GenPerMovMut 
+             * to give >1 mutation per individual - up to total mutation 
+             *             (i.e. 100% error on copy) 
+             */    
+            RateMovMut = (I32s) 160L * GenPerMovMut;
 
         if (GenPerBkgMut)
             RateMut    = (I32s) 400L * GenPerBkgMut;
@@ -1326,21 +1325,25 @@ void CalcFlawRates()
 
     }
 
-    if (!InstExe.m){
-        if((fp = fopen(FTfn,"w"))!=NULL)
-            FTfnok =1;
-    }
-    else{
-        if((fp = fopen(FTfn,"a"))!=NULL)
-            FTfnok =1;
-    }
-    if(FTfnok){
-        fprintf(fp,"-------------------------------------\nInstExe.m = %d\n",InstExe.m);
-        fprintf(fp,"FT_cfg_DeBiasLen = %d\n",FT_cfg_DeBiasLen);
-        fprintf(fp,"GenPerMovMut = %d\tRateMovMut = %d\n",GenPerMovMut,RateMovMut);
-        fprintf(fp,"GenPerBkgMut = %d\tRateMut    = %d\n",GenPerBkgMut,RateMut);
-        fprintf(fp,"GenPerFlaw   = %d\tRateFlaw   = %d\n",GenPerFlaw,RateFlaw);
-        fclose(fp);
+
+    /*Frontierra debias debug file output*/
+    if(FT_dbg_dblen){
+        if (!InstExe.m){
+            if((fp = fopen(FTfn,"w"))!=NULL)
+                FTfnok =1;
+        }
+        else{
+            if((fp = fopen(FTfn,"a"))!=NULL)
+                FTfnok =1;
+        }
+        if(FTfnok){
+            fprintf(fp,"-------------------------------------\nInstExe.m = %d\n",InstExe.m);
+            fprintf(fp,"FT_cfg_DeBiasLen = %d\n",FT_cfg_DeBiasLen);
+            fprintf(fp,"GenPerMovMut = %d\tRateMovMut = %d\n",GenPerMovMut,RateMovMut);
+            fprintf(fp,"GenPerBkgMut = %d\tRateMut    = %d\n",GenPerBkgMut,RateMut);
+            fprintf(fp,"GenPerFlaw   = %d\tRateFlaw   = %d\n",GenPerFlaw,RateFlaw);
+            fclose(fp);
+        }
     }
 
 }

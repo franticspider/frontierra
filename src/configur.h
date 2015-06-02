@@ -25,7 +25,7 @@
 /* #define READPROT */ /* define to implement read protection of soup */
 #define WRITEPROT  /* define to implement write protection of soup */
 /* #define EXECPROT */ /* define to implement execute protection of soup */
-/* sjh mod - commented out for speed: 
+/* frontierra mod - commented out for speed: 
 #define ERRORTIE     */  /* use to include error checking code */
 /* #define MEM_PROF  *//* profile dynamic memory usage */
 

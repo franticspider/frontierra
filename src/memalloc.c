@@ -365,7 +365,7 @@ I32s mal(sug_addr, sug_size, mode)
     ce->md.s = size;
     ce->c.c->fl.E = 0;
 
-    /*SJH mod: DownReaper is now turned on and off within the function itself (queues.c) */ 
+    /*Frontierra mod: DownReaper is now turned on and off within the function itself (queues.c) */ 
     DownReperIf(ce);
     return size;
 }

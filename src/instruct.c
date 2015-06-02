@@ -1513,10 +1513,22 @@ void push()
 void pop()
 {   I32s adr1;
 
+    /* Frontierra debug check */
+    FILE *fp;
+    I32s FTfnok = 0;
+    char * FTfn = "FTZeroBias.txt";
+
+    if (FT_dbg_dbzpop){
+        FT_dbg_dbzpop=0;
+        if((fp = fopen(FTfn,"w"))!=NULL){
+            FTfnok =1;
+        }
+    }
+
     DoRPNu();
     adr1=ce->c.c->st[ce->c.c->sp]+flaw();
 
-    /*sjh mod: switch between tierra 6.02 and Declan's zero-debiased version */
+    /*Frontierra mod: switch between tierra 6.02 and Declan's zero-debiased version */
     /*Tierra 6.02 version:*/
     if(!FT_cfg_DeBiasZero){    
         if((is.dreg)==(&(ce->c.c->ip)))
@@ -1529,6 +1541,14 @@ void pop()
             ce->c.c->sp = STACK_SIZE - 1;  /* decr stack pointer */
         else
             --ce->c.c->sp;
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasZero = %d\n",FT_cfg_DeBiasZero);
+            fprintf(fp,"Running Tierra 6.02 version of pop()\n");
+            fclose(fp);
+        }
+
+
     }
     /*FRONTIERRA ZERO DEBIASING CODE */
     else{
@@ -1558,6 +1578,13 @@ void pop()
                 --ce->c.c->sp;
         }/*Declan - braces added to include following if/else within this else*/
 	    /************/
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasZero = %d\n",FT_cfg_DeBiasZero);
+            fprintf(fp,"Running Frontierra version of pop()\n");
+            fclose(fp);
+        }
+
     }
 
     DoMods();
@@ -2282,7 +2309,7 @@ void divide()                   /* cell division */
             ce->d.ne = ce->q.htis;  /* clean up if div 0 or 1 before 2 */
             nc->d.dm = 0;
 
-            /*SJH mod: DownReaper is now turned on and off within the function itself (queues.c) */  
+            /*Frontierra: DownReaper is now turned on and off within the function itself (queues.c) */  
             DownReperIf(ce); 
             DivideBookeep(ce, nc, index);
 

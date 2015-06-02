@@ -18,6 +18,12 @@ I32s FT_cfg_DeBiasZero = 1; /* 0 = Tierra 6.02, 1 = No zero address bias */
 I32s FT_cfg_DeBiasReap = 1; /* 0 = Tierra 6.02, 1 = No reaper bias       */
 I32s FT_cfg_DeBiasLen  = 1; /* 0 = Tierra 6.02, 1 = No length bias       */
 I32s FT_cfg_DeBiasMut  = 1; /* 0 = Tierra 6.02, 1 = No mutation bias     */
+I32s FT_dbg_dbzpop = 1;        /* debug flag testing zero debiasing      */
+I32s FT_dbg_dbzjmp = 1;        /* debug flag testing zero debiasing      */
+I32s FT_dbg_dbrprup = 1;       /* debug flag testing up reaper debias    */
+I32s FT_dbg_dbrprdn = 1;       /* debug flag testing down reaper diabias */
+I32s FT_dbg_dblen  = 1;        /* debug flag testing length debiasing    */
+I32s FT_dbg_dbm    = 1;        /* debug flag testing mutation debiasing  */
 /*************************************************************************/
 
 I32s BrkupSiz = 1024; /* size of output file in K: break.1, break.2 ... */

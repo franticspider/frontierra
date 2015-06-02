@@ -8,7 +8,7 @@
 #include "license.h"
 #include "tierra.h"
 #include "globals.h"
-/* SJH mod: changing this to use differnt mutation networks. 
+/* frontierra mod: changing this to use differnt mutation networks. 
 */
 #include "frontierra.h"
 
@@ -220,9 +220,21 @@ void mut_site(s, track)
 HpInst s;
 I32s track;
 {    
+    /* Frontierra debug check */
+    FILE *fp;
+    I32s FTfnok = 0;
+    char * FTfn = "FTMutBias.txt";
+
+    if (FT_dbg_dbm){
+        FT_dbg_dbm=0;
+        if((fp = fopen(FTfn,"w"))!=NULL){
+            FTfnok =1;
+        }
+    }
+
 
     /*Tierra 6.02 version:*/
-    if(!FT_cfg_DeBiasZero){ 
+    if(!FT_cfg_DeBiasMut){ 
         if (tdrand() < MutBitProp) /* flip bit in instruction */
 		{
 #if PLOIDY == 1
@@ -239,19 +251,28 @@ I32s track;
             s[0][track]=(Instruction)(tirand()%(I32s)InstNum);
 #endif /* PLOIDY > 1 */
         }
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasMut = %d\n",FT_cfg_DeBiasMut);
+            fprintf(fp,"Running Tierra 6.02 version of mut_site()\n");
+            fclose(fp);
+        }
     }
     /*FRONTIERRA MUTATION DEBIASING CODE */
     else{
-        /* sjh mod: bit flip mutations are all very well, but they bias the arrangement
-         * of mutations. Better for neutral mutations to remove this */
 #if PLOIDY == 1
 	    s[0] = sw_mut(s[0]);
 	    //printf("to %c: %d\n",65+s[0], s[0]);
 #else /* PLOIDY > 1 */
 	    s[0][track] = sw_mut(s[0]);
 #endif    
-    }
 
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasMut = %d\n",FT_cfg_DeBiasMut);
+            fprintf(fp,"Running Frontierra version of mut_site()\n");
+            fclose(fp);
+        }
+    }
 }
 
 /*

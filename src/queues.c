@@ -133,7 +133,7 @@ void DownReaper(cp)
 {   Pcells pe, ne, ne2;
 
     if (cp == BottomReap){
-        printf("Can't downReaper - we're at the bottom!\n");
+        //printf("Can't downReaper - we're at the bottom!\n");
         return;
     }
 #ifdef ERRORTIE
@@ -169,11 +169,37 @@ void DownReaper(cp)
  */
 void UpRprIf(cp)
     Pcells cp;
-{   
+{      
+    FILE *fp;
+    I32s FTfnok = 0;
+    char * FTfn = "FTReapBiasUp.txt";
+
+    if (FT_dbg_dbrprup){
+        FT_dbg_dbrprup=0;
+        if((fp = fopen(FTfn,"w"))!=NULL){
+            FTfnok =1;
+        }
+    }
+
     if(!FT_cfg_DeBiasReap){
         if (cp->d.flags >= cells[cp->q.p_reap.a][cp->q.p_reap.i].d.flags)
             UpReaper(cp);
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasReap = %d\n",FT_cfg_DeBiasReap);
+            fprintf(fp,"Running Tierra 6.02 version of UpRprIf()\n");
+            fclose(fp);
+        }
     }
+    else{
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasReap = %d\n",FT_cfg_DeBiasReap);
+            fprintf(fp,"Running Frontierra version of UpRprIf()\n");
+            fclose(fp);
+        }
+    }
+
 }
 
 /*
@@ -186,9 +212,37 @@ void UpRprIf(cp)
 void DownReperIf(cp)
     Pcells cp;
 {   
+   
+    FILE *fp;
+    I32s FTfnok = 0;
+    char * FTfn = "FTReapBiasDown.txt";
+
+    if (FT_dbg_dbrprdn){
+        FT_dbg_dbrprdn=0;
+        if((fp = fopen(FTfn,"w"))!=NULL){
+            FTfnok =1;
+        }
+    }
+
+
+
     if(!FT_cfg_DeBiasReap){
         if (cp->d.flags <= cells[cp->q.n_reap.a][cp->q.n_reap.i].d.flags){
             DownReaper(cp);
+        }
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasReap = %d\n",FT_cfg_DeBiasReap);
+            fprintf(fp,"Running Tierra 6.02 version of DownReperIf()\n");
+            fclose(fp);
+        }
+    }
+    else{
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasReap = %d\n",FT_cfg_DeBiasReap);
+            fprintf(fp,"Running Frontierra version of DownReperIf()\n");
+            fclose(fp);
         }
     }
 }

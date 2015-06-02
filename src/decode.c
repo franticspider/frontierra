@@ -1143,9 +1143,30 @@ void decjmp() /* template jump: jmpo(), jmpb(), jmpf() */
         tval = flaw() + ce->c.d->re[0];
     tval = ce->c.c->re[mo(tval, NUMREG)] + flaw();
 
+
+
+    /* Frontierra debug check */
+    FILE *fp;
+    I32s FTfnok = 0;
+    char * FTfn = "FTZeroBiasJmp.txt";
+
+    if (FT_dbg_dbzjmp){
+        FT_dbg_dbzjmp=0;
+        if((fp = fopen(FTfn,"w"))!=NULL){
+            FTfnok =1;
+        }
+    }
+
+
     /*Tierra 6.02 version:*/
     if(!FT_cfg_DeBiasZero){
         is.sval = ad(tval);  // target for IP if s == 0 
+
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasZeroJmp = %d\n",FT_cfg_DeBiasZero);
+            fprintf(fp,"Running Tierra 6.02 version of decjmp()\n");
+            fclose(fp);
+        }
     }
     /*FRONTIERRA ZERO DEBIASING CODE */
     else{
@@ -1154,6 +1175,11 @@ void decjmp() /* template jump: jmpo(), jmpb(), jmpf() */
 	     * to next instruction in the soup, and will not jump to the location pointed
 	     * at by the bx register. */
         is.sval = ad(ce->c.c->ip + 1);  /* target for IP if s == 0 */
+        if(FTfnok){
+            fprintf(fp,"FT_cfg_DeBiasZeroJmp = %d\n",FT_cfg_DeBiasZero);
+            fprintf(fp,"Running Frontierra version of decjmp()\n");
+            fclose(fp);
+        }
 
     }
 

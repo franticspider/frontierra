@@ -28,7 +28,13 @@
 extern I32s FT_cfg_DeBiasZero; /* 0 = Tierra 6.02, 1 = No zero address bias */
 extern I32s FT_cfg_DeBiasReap; /* 0 = Tierra 6.02, 1 = No reaper bias       */
 extern I32s FT_cfg_DeBiasLen;  /* 0 = Tierra 6.02, 1 = No length bias       */
-extern I32s FT_cfg_DeBiasMut; /* 0 = Tierra 6.02, 1 = No mutation bias     */
+extern I32s FT_cfg_DeBiasMut;  /* 0 = Tierra 6.02, 1 = No mutation bias     */
+extern I32s FT_dbg_dbzpop;        /* debug flag testing zero debiasing      */
+extern I32s FT_dbg_dbzjmp;        /* debug flag testing zero debiasing      */
+extern I32s FT_dbg_dbrprup;       /* debug flag testing up reaper debias    */
+extern I32s FT_dbg_dbrprdn;       /* debug flag testing down reaper diabias */
+extern I32s FT_dbg_dblen;         /* debug flag testing length debiasing    */
+extern I32s FT_dbg_dbm;           /* debug flag testing mutation debiasing  */
 /****************************************************************************/
 
 

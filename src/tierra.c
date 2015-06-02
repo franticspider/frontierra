@@ -51,7 +51,7 @@ extern __declspec(dllimport) time_t tmlstact;
 #ifndef __GUI__
 
 /*SJH Mod for mutaion*/
-#include "popdy.h"
+#include "frontierra.h"
 /*SJH global mutation table*/
 struct s_swt *mut_table;
 

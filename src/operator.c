@@ -10,7 +10,7 @@
 #include "globals.h"
 /* SJH mod: changing this to use differnt mutation networks. 
 */
-#include "popdy.h"
+#include "frontierra.h"
 
 
 Pcells NextSliceQueue P_((Pcells  oc));

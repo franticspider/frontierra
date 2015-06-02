@@ -9,7 +9,7 @@
 #include "globals.h"
  
 /*SJH addition:*/
-#include "popdy.h"
+#include "frontierra.h"
 
 #ifdef BGL
 #include "tbgl.h"
@@ -430,7 +430,7 @@ void stats()
         }
         CalcGBStats(sl, siz_sl);
 	
-	/*SJH additon: from popdy.h:*/
+	/*SJH additon: from frontierra.h:*/
 	FilePopStats(sl, siz_sl);
 
     }

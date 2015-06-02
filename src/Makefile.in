@@ -85,7 +85,7 @@ endif # NET
 
 
 TIEEXE=tierra
-TIEBASNAM1=$(strip $(TIEEXE) popdy bookeep diskbank rambank \
+TIEBASNAM1=$(strip $(TIEEXE) frontierra bookeep diskbank rambank \
     tie_inc decode frontend instruct memalloc memtree slicers trand \
     tsetup ttools micromon operator tieaudsrv)
 ifeq ($(NET),yes)

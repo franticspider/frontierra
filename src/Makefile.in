@@ -69,7 +69,10 @@ COMCFLAGS=$(strip $(OPTIMIZ) -I. $(OSFLAGS) @DEFS@)
 
 ifneq ($(findstring gcc,$(CC)),)
 ifneq ($(findstring linux-gnu,@host_os@),)
-COMCFLAGS+=-I/usr/include/bsd -Wall -Wstrict-prototypes -Wno-unused
+#
+#COMCFLAGS+=-I/usr/include/bsd -Wall -Wstrict-prototypes -Wno-unused
+#
+COMCFLAGS+= -Wall -Wstrict-prototypes -Wno-unused
 endif # linux-gnu
 endif # gcc
 

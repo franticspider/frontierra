@@ -70,7 +70,10 @@ COMCFLAGS=$(strip $(OPTIMIZ) -I. $(OSFLAGS)  -DHAVE_LIBTERMCAP=1 -DHAVE_LIBCRYPT
 
 ifneq ($(findstring gcc,$(CC)),)
 ifneq ($(findstring linux-gnu,linux-gnu),)
-COMCFLAGS+=-I/usr/include/bsd -Wall -Wstrict-prototypes -Wno-unused
+#
+#COMCFLAGS+=-I/usr/include/bsd -Wall -Wstrict-prototypes -Wno-unused
+#
+COMCFLAGS+= -Wall -Wstrict-prototypes -Wno-unused
 endif # linux-gnu
 endif # gcc
 

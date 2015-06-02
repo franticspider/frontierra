@@ -17,3 +17,4 @@ src/config.log
 #These files are the test directories. They *should* be deleted after the test completes..
 tests/test1/
 tests/test2/
+tests/testlenbias/

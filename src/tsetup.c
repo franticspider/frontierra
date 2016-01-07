@@ -2976,6 +2976,10 @@ void GetSoup(argc, argv)
     {   tsprintf((char *)(&(Buf85b[0])), "%s%s", GenebankPath, IMapFile);
         GetAMap((I8s *)(&(Buf85b[0])));
     }
+    
+    /* Record the incoming seed value, because if it is zero, the next step will change it */
+    I32s oldseed = seed; 
+    
     if (!seed)
     {   seed = (I32s) tietime(NULL);
         tsrand(seed);
@@ -2985,6 +2989,7 @@ void GetSoup(argc, argv)
             lrandval=tlrand();
         }
     }
+    
     if (new_soup)
     {   tsrand(seed);
         lrandval=tlrand();
@@ -3096,10 +3101,31 @@ void GetSoup(argc, argv)
 #ifdef TIEAUDIO
     OpnTieAud();
 #endif /* TIEAUDIO */
+
     if (new_soup)
         GetNewSoup();
-    else
-        GetOldSoup(inf);
+    else{
+		GetOldSoup(inf);
+		/* frontierra modification: 
+
+		   if we are loading a soup_out file, we want to be able to use different random number seeds
+		   so that we can get a range of runs from the same start point. If seed = 0 in the soup_out
+		   file, we need to reset the random number generator, but we must do that after we've got the 
+		   old soup.
+		   
+		   To achieve this, we record the seed value from the soup_out file in the oldseed variable, 
+		   and then re-seed the random number generator like so:
+		   */
+		   
+		if(!oldseed){
+		 	oldseed = (I32s) tietime(NULL);   
+			printf("oldseed is %d\n",oldseed);
+			tsrand(oldseed);
+			/* Record the seed value so we can write it to the soup_out file when the run finishes */
+			seed = oldseed = tlrand();
+		}
+    }
+    
     ToggleLog(TierraLog, &tfp_log, (I8s *)TIERRALOGNAME, &tielogpos);
 #ifdef NET
     ToggleLog(PingDatLog, &ping_fp, (I8s *)TPINGLOGNAME, &tpinglogpos);

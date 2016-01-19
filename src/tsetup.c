@@ -3113,17 +3113,20 @@ void GetSoup(argc, argv)
 		   file, we need to reset the random number generator, but we must do that after we've got the 
 		   old soup.
 		   
+		   Alternatively, we might choose to insert a random number seed into the soup_out file by hand.
+		   If this is the case, then we will need to reset the random number generator using this seed. 
+		   
 		   To achieve this, we record the seed value from the soup_out file in the oldseed variable, 
-		   and then re-seed the random number generator like so:
+		   and then re-seed the random number generator AFTER we call GetOldSoup() like so:
 		   */
 		   
 		if(!oldseed){
-		 	oldseed = (I32s) tietime(NULL);   
-			printf("oldseed is %d\n",oldseed);
-			tsrand(oldseed);
-			/* Record the seed value so we can write it to the soup_out file when the run finishes */
-			seed = oldseed = tlrand();
-		}
+		 	oldseed = (I32s) tietime(NULL);
+		}   
+		printf("oldseed is %d\n",oldseed);
+		tsrand(oldseed);
+		/* Record the seed value so we can write it to the soup_out file when the run finishes */
+		seed = oldseed = tlrand();
     }
     
     ToggleLog(TierraLog, &tfp_log, (I8s *)TIERRALOGNAME, &tielogpos);

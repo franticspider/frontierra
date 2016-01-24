@@ -11,6 +11,7 @@ CumGeneBnk = 1    Use cumulative gene files, or overwrite
 debug = 0         0 = off, 1 = on, printf statements for debugging
 DiskBank = 1      save 'successful' genomes to disk 
 DiskOut = 0       we don't need this - same info in tiepopdy.dat
+SavMinNum = 1     min no. of individuals to save genotype
 
 ######################################################################################
 FindTimeM = 0    to set trap at a certain InstExe time, for debugging
@@ -22,7 +23,7 @@ hangup = 0            0 = exit on error, 1 = hangup on error for debugging
 MaxFreeBlocks = 800     initial number of structures for memory allocation
 SaveFreq = 100     frequency of saving core_out, soup_out and list
 SavRenewMem = 0   free and renew dynamic memory after saving to disk
-SavMinNum = 10     minimum number of individuals to save genotype
+###SavMinNum = 10     minimum number of individuals to save genotype
 SavThrMem = .02  threshold memory occupancy to save genotype
 SavThrPop = .02  threshold population proportion to save genotype
 TierraLog = 0    0 = no log file, 1 = write log file
